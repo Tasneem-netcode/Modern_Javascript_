@@ -1,0 +1,194 @@
+/* General Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 960px;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    padding: 0 20px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ddd;
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Sections */
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+section h2 {
+    margin-bottom: 20px;
+}
+
+#home {
+    background: #555;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Projects */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Contact Form */
+form {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px;
+    border: none;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #555;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    color: #fff;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+
+    .nav-links li {
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .nav-active {
+        transform: translateX(0%);
+    }
+
+    @keyframes navLinkFade {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+
+    .toggle .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .toggle .line2 {
+        opacity: 0;
+    }
+
+    .toggle .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
