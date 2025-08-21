@@ -94,3 +94,53 @@ function abcd(){
     return 12;
 }
 console.log(abcd());
+
+//first order functions:When functions are treated as values (variables) in js then its called first order-function
+//passing a function as argument :
+function origin(val){
+     val();
+}
+origin(function(){
+  console.log("This is the function passed as argument to origin functions parameter val");
+});
+
+function run(fn) {
+  fn();
+}
+run(() => console.log("I was passed as an argument!"));
+
+
+//store as variable:
+const sayHi = function() {
+  console.log("Hi!");
+};
+sayHi(); // Hi!
+
+
+//Return from another function:
+function adder(x){
+  return function(y){
+    return x+y;
+  };
+}
+// const add5 = adder(5)
+// add5(10);
+console.log(adder(2)(5));
+
+//higher order function:
+function sayhello(name){
+  return `hello, ${name}`;
+}
+function processUser(name, callback){
+  console.log(callback(name));
+}
+
+processUser("Waniya", sayhello);
+
+//return a function for hof:
+function multiplier(x){
+  return function(y){
+    return x*y;
+  };
+}
+console.log(multiplier(2)(5));
