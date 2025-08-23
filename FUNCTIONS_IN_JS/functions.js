@@ -144,3 +144,78 @@ function multiplier(x){
   };
 }
 console.log(multiplier(2)(5));
+
+
+//pure functions:
+function add(a , b){
+  return a+b;
+}
+console.log(add(2, 3));
+console.log(add(2, 3)); // same input and same output 
+
+
+//impure functions
+let count = 0;
+function increment(){
+  count++;
+  return count;
+}
+// no matter howmany times i call the same function i get different outputs that change the value of count , these are impure functions
+console.log(increment());//1
+console.log(increment());//1+1 = 2 
+console.log(increment());//2+1 = 3 
+console.log(increment());//3+1 = 4
+
+
+//closures:
+function outer() {
+  let secret = "I am hidden 🤫";
+
+  function inner() {
+    console.log(secret); // inner still has access to "secret"
+  }
+
+  return inner;
+}
+
+// const fn = outer(); // outer() runs and finishes
+// fn(); // logs: I am hidden 🤫
+outer()();
+
+function makeCounter(){
+  let count = 0 ;
+  
+  return function(){
+  count++;
+  return count;
+  };
+}
+
+console.log(makeCounter()());
+console.log(makeCounter()());
+console.log(makeCounter()());
+const mc = makeCounter();
+
+console.log(mc());
+console.log(mc());
+console.log(mc());
+console.log(mc());
+
+
+//IIFE:
+(function(){
+  console.log("This is IMmEDIATELY INVOKED FUNCTION that runs immediately")
+})();
+
+///with parameters:
+(function(name){
+   console.log(`hello, ${name}`);
+})("I am name");
+
+//return a value:
+let result = (function(a, b) {
+  return a + b;
+})(5, 10);
+
+console.log(result); // 15
+

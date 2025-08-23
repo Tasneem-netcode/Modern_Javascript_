@@ -97,3 +97,4 @@ while(number>0){
 }
 
 console.log(`total digits are ${cnt}`);
+
