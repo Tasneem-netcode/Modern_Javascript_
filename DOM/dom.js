@@ -49,3 +49,61 @@ console.log(img.getAttribute("src"));
 //removeattribute:
 // let a = document.querySelector("a");
 // a.removeAttribute("href");
+
+//create and remove DOM elements:
+let newh3 = document.createElement("h3");
+newh3.textContent = "this is new heading 3 created by createElement DOM method";
+newh3.className = "new-h3";
+newh3.style.color = "blue";
+
+//append the element to the body
+document.body.appendChild(newh3);
+
+//append
+const div = document.getElementById("container");
+const newp = document.createElement("p");
+newp.textContent = "this is new paragraph created by createElement DOM method";
+div.append(newp , " some more text");
+
+//prepend
+// const div = document.getElementById("container");
+const newp2 = document.createElement("p");
+newp2.textContent= "this is new paragraph 2 created by createElement DOM method an passed to prepend method, so this will be added at the beginning of the div"
+div.prepend(newp2);
+
+//remove
+const ul = document.querySelector("ul");
+const list = document.querySelector("li");
+ul.removeChild(list);//removes the first li element from the ul
+
+//to remove all list items:
+// const lists = document.querySelectorAll("li");
+// lists.forEach(li => li.remove());//removes all li elements
+
+// for(const li of lists){
+//     ul.removeChild(li);//removes all li elements from
+// }
+
+
+//or append to any other element
+// document.getElementById("some-id").appendChild(newh3);
+//prepend the element to the body
+// document.body.prepend(newh3);//before the body
+
+
+//style and classList
+let para = document.querySelector("p");
+para.textContent = "this is a paragraph created to demonstrate style and classList property of DOM";
+para.style.color = "red";
+para.style.fontSize = "20px";
+para.style.backgroundColor = "lightgrey";
+para.style.padding = "10px";
+para.style.borderRadius = "5px";
+console.log(para.style)
+
+let h3style =  document.querySelector("h3");
+h3style.classList.add("headstyle");
+// h3style.classList.remove("headstyle");
+h3style.classList.toggle("headstyle");//removes the class if already present otherwise adds the class
+h3style.classList.toggle("headstyle");
+console.log(h3style.classList);
