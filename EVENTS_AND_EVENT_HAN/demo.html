@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Congrats Celebration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background: #f8f9fa;
+    }
+    h1 {
+      color: #333;
+    }
+    #celebrateBtn {
+      padding: 12px 24px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #28a745;
+      display: none;
+    }
+    /* Confetti style */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      top: -10px;
+      animation: fall 6s linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Click the button to celebrate 🎉</h1>
+  <button id="celebrateBtn">Click Me</button>
+  <div id="message">🎉 Congrats! 🎉</div>
+
+  <script>
+    const btn = document.getElementById("celebrateBtn");
+    const message = document.getElementById("message");
+
+    btn.addEventListener("click", () => {
+      // show congrats message
+      message.style.display = "block";
+
+      // create 50 confetti pieces
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        // random position and color
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.backgroundColor =
+          `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        // random animation duration
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(confetti);
+
+        // remove confetti after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 4000);
+      }
+    });
+  </script>
+
+</body>
+</html>
