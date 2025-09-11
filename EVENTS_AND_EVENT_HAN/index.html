@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events and Event Handling</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,body{
+            height: 100%;
+            width: 100%;
+            background-color: #222;
+            color: white;
+
+        }
+
+        .main{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Gilroy" ;
+           background-color: #222;
+        }
+        #title{
+            color: #555;
+            user-select: none;
+            font-size: 10rem;
+            font-weight: 300;
+        }
         #message{
             display: none;
             margin-top: 20px;
@@ -12,12 +40,62 @@
             font-weight: bold;
             text-align: center;
         }
+
+        #file_input{
+            display: none;
+        }
+        #btn_to_upload{
+            padding: 10px 20px;
+            background-color: gray;
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        #btn_to_upload:hover{
+            background-color: lightcyan;
+            color: black;
+
+        }
     </style>
 </head>
 <body>
-    <button>Click me</button>
+    <!-- <button>Click me</button>
     <div id="message">Congrats</div>
     <p>Double click me to change my color</p>
+    <button onclick="clickMe()">Click Me</button>
+    <button class="BuyNow">Buy Now</button> -->
+   
+    <div class="main">
+        <input type="file" id="file_input">
+        <div id="btn_to_upload">
+            Upload your file
+        </div>
+    </div>
+
+
+    <!-- <div class="main">
+        <h1 id="title">p</h1>
+    </div>
+    <p id="paragraph">Lorem, ipsum dolor.</p>
+
+    <input type="text" placeholder="Type something...">
+
+    <h1 id="Devices">Select your Device</h1>
+    <select>
+        <option selected disabled>Choose Your Device</option>
+        <option value="Samsung">Samsung</option>
+        <option value="Apple">Apple</option>
+        <option value="Nokia">Nokia</option>
+        <option value="Motorola">Motorola</option>
+        <option value="Sony">Sony</option>
+        <option value="HTC">HTC</option>
+        <option value="Infinix">Infinix</option>
+        <option value="Xiaomi">Xiaomi</option>
+        <option value="OnePlus">OnePlus</option>
+        <option value="Oppo">Oppo</option>
+    </select> -->
+
      <script src="events_and_event_handling.js"></script>
 </body>
 </html>
