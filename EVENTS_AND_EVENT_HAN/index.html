@@ -19,11 +19,13 @@
         }
 
         .main{
+            padding: 50px;
+            margin: 20px auto;
             width: 100%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            /* display: flex; */
+            /* justify-content: center; */
+            /* align-items: center; */
             font-family: "Gilroy" ;
            background-color: #222;
         }
@@ -40,7 +42,28 @@
             font-weight: bold;
             text-align: center;
         }
+        input{
+            display: block;
+        }
 
+        .card{
+            max-width: 300px;
+            color: wheat;
+            margin-top: 40px;
+            border-radius: 10px;
+            display: inline-block;
+            padding: 20px;
+            border: 2px solid wheat;
+
+        }
+        .profile{
+            width: 40px;
+            height: 40px;
+            background-color: blanchedalmond;
+            border-radius: 50%;
+            margin:7px;
+            overflow: hidden;
+        }
         #file_input{
             display: none;
         }
@@ -53,9 +76,26 @@
         }
 
         #btn_to_upload:hover{
-            background-color: lightcyan;
+            background-color: rgb(219, 201, 201);
             color: black;
 
+        }
+
+        .profile img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* border: 2px solid rgba(0, 0, 0, 0.611); */
+            /* border-radius: 50%; */
+            cursor: pointer;
+        }
+        .card h3{
+            margin-top: 4px;
+        }
+
+        .card p {
+            font-size: 12px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -66,6 +106,24 @@
     <button onclick="clickMe()">Click Me</button>
     <button class="BuyNow">Buy Now</button> -->
    
+    <form action="">
+        <input type="text" placeholder="name">
+        <input type="number" placeholder="age">
+        <input type="email" placeholder="email">
+        <input type="file" placeholder="profile pic">
+        <input type ="submit" placeholder="submit">
+    </form>
+    
+    <div class="card">
+        <div class="profile">
+            <img src="https://plus.unsplash.com/premium_photo-1756926021582-84f0fbf163c7?q=80&w=777&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+        </div>
+         <h3>Tasneem Raza</h3>
+         <h5>Web Developer</h5>
+         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, rerum. Adipisci, expedita!</p>
+    </div>
+
+
     <div class="main">
         <input type="file" id="file_input">
         <div id="btn_to_upload">
