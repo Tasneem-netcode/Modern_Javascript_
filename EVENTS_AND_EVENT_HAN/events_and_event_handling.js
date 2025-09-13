@@ -187,7 +187,7 @@
 
 let form = document.querySelector("form");
 let inputs = document.querySelectorAll("input");
-
+let main = document.querySelector("#main");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault(); //to prevent the default behaviour of form submission
@@ -197,4 +197,47 @@ form.addEventListener("submit", (e) => {
     console.log(inputs[1].value);
     console.log(inputs[2].value);
     console.log(inputs[3].files[0]); 
-});
+
+    let card = document.createElement("div");
+    card.classList.add("card");
+    
+    let profile = document.createElement("div");
+    profile.classList.add("profile");
+
+    let img = document.createElement("img");
+    // img.setAttribute("src","https://plus.unsplash.com/premium_photo-1757637871816-221a63ff7f3c?q=80&w=773&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" );
+
+    img.setAttribute("src", URL.createObjectURL(inputs[3].files[0]));//creates a temporary URL pointing to the file object
+    img.setAttribute("alt", "profile pic");
+
+    console.log(img);
+    
+    let email = document.createElement("h5");
+    email.textContent = inputs[2].value;
+
+    let h3 = document.createElement("h3");
+    h3.textContent = inputs[0].value;
+    
+    let h5 = document.createElement("h5");
+    h5.textContent = "Web Developer";
+    
+    
+    let p = document.createElement("p");
+    p.textContent = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, rerum. Adipisci, expedita!";
+    
+    h5.appendChild(email);
+    profile.appendChild(img);
+    card.appendChild(profile); 
+
+    card.appendChild(email);
+    card.appendChild(h3);
+    card.appendChild(h5);
+    card.appendChild(p);
+    main.appendChild(card);
+if(inputs.type !== "submit"){
+    inputs.forEach(input => input.value = "");
+
+}
+    // document.body.appendChild( card);
+    });
+
