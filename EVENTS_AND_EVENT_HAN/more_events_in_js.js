@@ -55,22 +55,44 @@
 // let nav = document.querySelector("#nav");
 // nav.addEventListener("click", (e) => {
 //     alert("nav clicked"); //event bubbling when we click on a child element of nav, the event also gets triggered on nav
-    // e.stopPropagation(); //stops the event from bubbling up
+//     e.stopPropagation(); //stops the event from bubbling up
 // });
 
 //rather than adding event listener to each li, we can add it to the ul and use event.target to get the clicked li through event bubbling the event will bubble up to the ul
-let ul = document.querySelector("ul");
-ul.addEventListener("click", (e) => {
-ul.addEventListener("mouseover", (e) => {
-    e.target.style.cursor = "pointer";
-});
+// let ul = document.querySelector("ul");
+// ul.addEventListener("click", (e) => {
+// ul.addEventListener("mouseover", (e) => {
+//     e.target.style.cursor = "pointer";
+// });
     // if (e.target.tagName === "LI") {
     //     alert("List item clicked: " + e.target.textContent);
     //     e.target.style.textDecoration = "line-through";
     // }
     
     //if event is already added, it will remove or else add the event through classlist toggle
-    e.target.classList.toggle("li");
+//     e.target.classList.toggle("li");
+// });
+
+
+//event capturing
+let adiv = document.querySelector(".a");
+let bdiv = document.querySelector(".b");
+let cdiv = document.querySelector(".c");
+let btn = document.querySelector("button");
+
+btn.addEventListener("click", (e) => {
+    btn.style.backgroundColor = "black";
+    console.log("button clicked");
 });
 
+cdiv.addEventListener("click", (e) => {
+    console.log("c clicked");
+});
 
+bdiv.addEventListener("click", (e) => {
+    console.log("b clicked");
+}); 
+
+adiv.addEventListener("click", (e) => {
+    console.log("a clicked");
+}, true); //true for event capturing, false for event bubbling (default is false)
