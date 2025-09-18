@@ -44,17 +44,23 @@
 </head>
 <body>
     <form>
+        <!-- inline validation using HTML5 attributes -->
+        <!-- <input required minlength="2" id="name" type="text" placeholder="Username"> -->
         <input id="name" type="text" placeholder="Username">
-        <div id="hide">
+        <div id="hide" style="display:none">
             <br>
-            <small>Your name should be at least 2 characters long.</small>
+            <small id="username-warning"></small>
         </div>
         <br><br>
-        <input type="email" placeholder="Email">
+        <input id="email" type="text" placeholder="Email">
+        <div id="email-hide" style="display:none">
+            <br>
+            <small id="email-warning"></small>
+        </div>
         <br><br>
-        <input type="password" placeholder="Password">
+        <input id="password" minlength="6" maxlength="12" type="password" placeholder="Password">
         <br><br>
-        <select name="gender">
+        <select id="gender" name="gender" required>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
