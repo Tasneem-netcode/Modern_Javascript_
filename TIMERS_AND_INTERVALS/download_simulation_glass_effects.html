@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Glass Download Simulation UI</title>
+  <style>
+    :root{
+      --bg-1: #0f1724;
+      --bg-2: #11203a;
+      --accent: #6ee7b7; /* mint */
+      --accent-2: #7dd3fc; /* sky */
+      --glass-bg: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --card-radius: 16px;
+      --glass-blur: 10px;
+      --text: #e6eef8;
+      --muted: #a9c0d9;
+      --danger: #ff7b7b;
+      --success: #7ef0a3;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* Page background */
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 20%, rgba(125,211,252,0.08), transparent 6%),
+                  radial-gradient(1000px 500px at 90% 80%, rgba(110,231,183,0.05), transparent 5%),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+
+    /* Centering container */
+    .wrap{
+      width: min(720px, 94vw);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* Frosted glass card */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--card-radius);
+      padding: 20px;
+      backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+      overflow: hidden;
+    }
+
+    .header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .file-thumb{
+      width:72px;
+      height:72px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(135deg, rgba(125,211,252,0.12), rgba(110,231,183,0.08));
+      border:1px solid rgba(255,255,255,0.04);
+      flex-shrink:0;
+    }
+    .file-thumb svg{ width:38px; height:38px; fill:transparent; stroke:var(--accent-2); stroke-width:1.8; stroke-linejoin:round; stroke-linecap:round; filter: drop-shadow(0 2px 6px rgba(34,50,80,0.5)); }
+
+    .meta{
+      flex:1;
+      min-width:0;
+    }
+    .filename{
+      font-weight:600;
+      font-size:1.02rem;
+      color:var(--text);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .filesize{
+      margin-top:6px;
+      font-size:0.88rem;
+      color:var(--muted);
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-top:14px;
+    }
+
+    .btn{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text);
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
+    }
+    .btn:active{ transform:translateY(1px); }
+    .btn.ghost{
+      background:transparent;
+      border:1px dashed rgba(255,255,255,0.04);
+      color:var(--muted);
+    }
+    .btn.primary{
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#022;
+      box-shadow: 0 6px 18px rgba(109,178,167,0.12);
+      border:none;
+    }
+    .btn.danger{
+      background: linear-gradient(90deg,#ff8b8b,#ff5a5a);
+      color:#140606;
+      border:none;
+    }
+
+    /* Progress area */
+    .progress-wrap{
+      margin-top:18px;
+      display:grid;
+      gap:10px;
+    }
+    .progress-bar{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius: 12px;
+      height:16px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .progress-fill{
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width:0%;
+      background: linear-gradient(90deg, rgba(125,211,252,0.22), rgba(110,231,183,0.24));
+      box-shadow: 0 4px 18px rgba(92,164,150,0.12);
+      transition: width 220ms linear;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      padding-right:8px;
+    }
+    /* stripe animation inside fill */
+    .progress-fill::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image: linear-gradient(135deg, rgba(255,255,255,0.03) 25%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.03) 50%);
+      background-size: 24px 24px;
+      opacity:0.28;
+      transform: translateX(0);
+      animation: stripes 1s linear infinite;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+    }
+    @keyframes stripes { from { transform:translateX(0);} to {transform:translateX(24px);} }
+
+    .progress-text{
+      font-weight:700;
+      font-size:0.86rem;
+      color: rgba(0,0,0,0.62);
+      z-index:2;
+    }
+
+    .meta-stats{
+      display:flex;
+      gap:16px;
+      color:var(--muted);
+      font-size:0.88rem;
+      margin-top:6px;
+      align-items:center;
+    }
+
+    .small{
+      font-size:0.82rem;
+      color:var(--muted);
+    }
+
+    /* footer */
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:14px;
+    }
+
+    /* status badge */
+    .badge{
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:0.85rem;
+      color:var(--text);
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    /* subtle glowing ring */
+    .card:after{
+      content:"";
+      position:absolute;
+      pointer-events:none;
+      width:420px; height:420px;
+      transform:translate(-26%, -60%) rotate(8deg);
+      background: radial-gradient(circle at 30% 30%, rgba(125,211,252,0.02), transparent 10%);
+      filter: blur(30px);
+      mix-blend-mode:soft-light;
+    }
+
+    /* completed view */
+    .done {
+      border: 1px solid rgba(126,255,164,0.12);
+      box-shadow: 0 12px 36px rgba(34,57,40,0.32);
+    }
+
+    /* responsiveness */
+    @media (max-width:540px){
+      .header{ gap:12px; }
+      .file-thumb{ width:60px; height:60px; }
+      .btn{ padding:8px 10px; font-size:0.92rem; }
+      .badge{ font-size:0.8rem; padding:7px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="card" role="region" aria-label="Download card">
+      <div class="header">
+        <div class="file-thumb" aria-hidden="true">
+          <!-- cloud download svg -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3v10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 11l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 16.5A3.5 3.5 0 0 0 16.5 13h-1.1A4.4 4.4 0 0 0 9 9.9 4.4 4.4 0 0 0 3.6 14.7C2.4 14.9 1.5 15.9 1.5 17.2 1.5 18.7 2.8 20 4.3 20h12.2c2 0 3.7-1.6 3.7-3.7 0-.3 0-.5-.2-.8z"></path>
+          </svg>
+        </div>
+
+        <div class="meta">
+          <div class="filename" id="filename">project_design_assets_v3.zip</div>
+          <div class="filesize" id="filesize">1.24 GB • ZIP archive</div>
+
+          <div class="controls">
+            <button id="startBtn" class="btn primary" title="Start download">
+              ▶ Start download
+            </button>
+
+            <button id="pauseBtn" class="btn ghost" style="display:none;">
+              ⏸ Pause
+            </button>
+
+            <button id="resumeBtn" class="btn ghost" style="display:none;">
+              ▶ Resume
+            </button>
+
+            <button id="cancelBtn" class="btn" style="display:none;">
+              ✖ Cancel
+            </button>
+          </div>
+
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+          <div class="badge" id="statusBadge">Idle</div>
+          <div class="small" style="color:var(--muted);">Simulated network</div>
+        </div>
+      </div>
+
+      <div class="progress-wrap" aria-hidden="false">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progressFill">
+            <div class="progress-text" id="progressText">0%</div>
+          </div>
+        </div>
+
+        <div class="meta-stats">
+          <div class="stat">
+            <span class="small">Downloaded</span><br/>
+            <strong id="downloaded">0 MB</strong>
+          </div>
+          <div class="stat">
+            <span class="small">Speed</span><br/>
+            <strong id="speed">—</strong>
+          </div>
+          <div class="stat">
+            <span class="small">ETA</span><br/>
+            <strong id="eta">—</strong>
+          </div>
+          <div style="flex:1"></div>
+        </div>
+
+        <div class="footer">
+          <div class="small" id="timeInfo">Ready to download</div>
+          <div style="display:flex;gap:8px;">
+            <button id="openFolderBtn" class="btn ghost" style="display:none;">📂 Open folder</button>
+            <button id="replayBtn" class="btn" style="display:none;">🔁 Download again</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* --- Simulation logic --- */
+    (function(){
+      const startBtn = document.getElementById('startBtn');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const resumeBtn = document.getElementById('resumeBtn');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const openFolderBtn = document.getElementById('openFolderBtn');
+      const replayBtn = document.getElementById('replayBtn');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const downloadedEl = document.getElementById('downloaded');
+      const speedEl = document.getElementById('speed');
+      const etaEl = document.getElementById('eta');
+      const timeInfo = document.getElementById('timeInfo');
+      const statusBadge = document.getElementById('statusBadge');
+      const card = document.getElementById('card');
+
+      // Config: file size in bytes (1.24 GB typical)
+      const FILE_SIZE = 1.24 * 1024 * 1024 * 1024; // bytes
+
+      // Simulation state
+      let downloaded = 0;
+      let state = 'idle'; // 'idle' | 'downloading' | 'paused' | 'completed' | 'cancelled'
+      let lastTick = null;
+      let rafId = null;
+      let currentSpeed = 0; // bytes/sec
+      let avgSpeed = 0;
+      let speedSamples = [];
+
+      // Helpers
+      const fmtBytes = (b) => {
+        if (b >= 1<<30) return (b / (1<<30)).toFixed(2) + ' GB';
+        if (b >= 1<<20) return (b / (1<<20)).toFixed(2) + ' MB';
+        if (b >= 1<<10) return (b / (1<<10)).toFixed(2) + ' KB';
+        return b + ' B';
+      };
+      const fmtTime = (s) => {
+        if (!isFinite(s) || s<0) return '—';
+        s = Math.round(s);
+        if (s < 60) return s + 's';
+        const m = Math.floor(s/60);
+        const sec = s % 60;
+        return `${m}m ${sec}s`;
+      };
+      const pct = () => Math.min(100, (downloaded / FILE_SIZE) * 100);
+
+      // Simulate variable network speed: choose a base and add jitter
+      function sampleSpeed(){
+        // base between 1.5 MB/s and 12 MB/s (realistic-ish)
+        const base = 1.5 + Math.random() * 10.5; // MB/s
+        // occasional spikes/drops
+        const factor = (Math.random() < 0.06) ? (0.4 + Math.random()*2.5) : (0.75 + Math.random()*0.6);
+        const mbps = base * factor;
+        return mbps * 1024 * 1024; // bytes/sec
+      }
+
+      function updateUI(){
+        const percentage = pct();
+        progressFill.style.width = percentage + '%';
+        progressText.textContent = Math.floor(percentage) + '%';
+        downloadedEl.textContent = fmtBytes(downloaded);
+        speedEl.textContent = currentSpeed > 0 ? (fmtBytes(currentSpeed) + '/s') : '—';
+        const remaining = FILE_SIZE - downloaded;
+        etaEl.textContent = currentSpeed > 50 ? fmtTime(remaining / currentSpeed) : '—';
+        statusBadge.textContent = {
+          idle: 'Idle',
+          downloading: 'Downloading',
+          paused: 'Paused',
+          completed: 'Completed',
+          cancelled: 'Cancelled'
+        }[state] || 'Idle';
+
+        // aria
+        const progressbar = document.querySelector('.progress-bar');
+        if (progressbar) progressbar.setAttribute('aria-valuenow', Math.floor(percentage));
+      }
+
+      function tick(now){
+        if (state !== 'downloading') return;
+        if (!lastTick) lastTick = now;
+        const dt = (now - lastTick) / 1000; // seconds since last frame
+        lastTick = now;
+
+        // occasionally re-sample speed every ~0.25–0.9s
+        if (!this._nextSpeedTime) this._nextSpeedTime = now + (200 + Math.random()*700);
+        if (now >= this._nextSpeedTime) {
+          currentSpeed = sampleSpeed();
+          speedSamples.push(currentSpeed);
+          if (speedSamples.length > 10) speedSamples.shift();
+          this._nextSpeedTime = now + (120 + Math.random()*800);
+        } else {
+          // tiny variation to current speed
+          currentSpeed = Math.max(2000, currentSpeed * (0.995 + Math.random()*0.01));
+        }
+
+        // bytes to add this frame (cap to not overshoot)
+        const add = Math.min(FILE_SIZE - downloaded, currentSpeed * dt);
+        downloaded += add;
+
+        // update moving average speed
+        if (speedSamples.length) {
+          avgSpeed = speedSamples.reduce((s,x)=>s+x,0) / speedSamples.length;
+        } else {
+          avgSpeed = currentSpeed;
+        }
+
+        updateUI();
+
+        if (downloaded >= FILE_SIZE - 1) {
+          // complete
+          downloaded = FILE_SIZE;
+          state = 'completed';
+          cancelAnimationFrame(rafId);
+          rafId = null;
+          lastTick = null;
+          onComplete();
+        } else {
+          rafId = requestAnimationFrame(tick.bind(this));
+        }
+      }
+
+      function startDownload(){
+        if (state === 'downloading') return;
+        if (state === 'completed') {
+          // reset to download again
+          resetAll();
+        }
+
+        state = 'downloading';
+        startBtn.style.display = 'none';
+        pauseBtn.style.display = '';
+        cancelBtn.style.display = '';
+        resumeBtn.style.display = 'none';
+        openFolderBtn.style.display = 'none';
+        replayBtn.style.display = 'none';
+        timeInfo.textContent = 'Connecting...';
+        statusBadge.textContent = 'Starting';
+        currentSpeed = sampleSpeed();
+        speedSamples = [currentSpeed];
+        lastTick = null;
+        // small delay to feel realistic
+        setTimeout(() => {
+          statusBadge.textContent = 'Downloading';
+          rafId = requestAnimationFrame(tick.bind({}));
+        }, 350 + Math.random()*350);
+      }
+
+      function pauseDownload(){
+        if (state !== 'downloading') return;
+        state = 'paused';
+        pauseBtn.style.display = 'none';
+        resumeBtn.style.display = '';
+        timeInfo.textContent = 'Paused';
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        lastTick = null;
+        updateUI();
+      }
+
+      function resumeDownload(){
+        if (state !== 'paused') return;
+        state = 'downloading';
+        pauseBtn.style.display = '';
+        resumeBtn.style.display = 'none';
+        timeInfo.textContent = 'Resuming...';
+        lastTick = null;
+        rafId = requestAnimationFrame(tick.bind({}));
+      }
+
+      function cancelDownload(){
+        if (state !== 'downloading' && state !== 'paused') return;
+        state = 'cancelled';
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        pauseBtn.style.display = 'none';
+        resumeBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        startBtn.style.display = '';
+        startBtn.textContent = 'Start download';
+        timeInfo.textContent = 'Download cancelled';
+        openFolderBtn.style.display = 'none';
+        replayBtn.style.display = '';
+        updateUI();
+      }
+
+      function onComplete(){
+        state = 'completed';
+        pauseBtn.style.display = 'none';
+        resumeBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        startBtn.style.display = 'none';
+        openFolderBtn.style.display = '';
+        replayBtn.style.display = '';
+        timeInfo.textContent = 'Download complete';
+        statusBadge.textContent = 'Completed';
+        card.classList.add('done');
+        // subtle confetti-ish glow by adding a brief highlight
+        const oldShadow = card.style.boxShadow;
+        card.animate([
+          { boxShadow: '0 12px 40px rgba(126,255,164,0.06)' },
+          { boxShadow: oldShadow || '0 8px 30px rgba(2,6,23,0.55)' }
+        ], { duration: 900 });
+        updateUI();
+      }
+
+      function resetAll(){
+        downloaded = 0;
+        currentSpeed = 0;
+        avgSpeed = 0;
+        speedSamples = [];
+        state = 'idle';
+        lastTick = null;
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        card.classList.remove('done');
+        startBtn.style.display = '';
+        pauseBtn.style.display = 'none';
+        resumeBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        openFolderBtn.style.display = 'none';
+        replayBtn.style.display = 'none';
+        timeInfo.textContent = 'Ready to download';
+        progressFill.style.width = '0%';
+        progressText.textContent = '0%';
+        downloadedEl.textContent = fmtBytes(0);
+        speedEl.textContent = '—';
+        etaEl.textContent = '—';
+        statusBadge.textContent = 'Idle';
+      }
+
+      // wire up buttons
+      startBtn.addEventListener('click', startDownload);
+      pauseBtn.addEventListener('click', pauseDownload);
+      resumeBtn.addEventListener('click', resumeDownload);
+      cancelBtn.addEventListener('click', cancelDownload);
+      replayBtn.addEventListener('click', () => {
+        resetAll();
+        startDownload();
+      });
+      openFolderBtn.addEventListener('click', () => {
+        // impossible in browser - just give user a friendly message
+        alert("In a real app this would open the download folder.\n(Here it's just a simulation.)");
+      });
+
+      // init UI
+      resetAll();
+
+      // Accessibility: keyboard shortcuts for convenience
+      window.addEventListener('keydown', (e) => {
+        if (e.key === ' ' && state === 'downloading') { e.preventDefault(); pauseDownload(); }
+        else if (e.key === ' ' && state === 'paused') { e.preventDefault(); resumeDownload(); }
+        else if (e.key.toLowerCase() === 'c' && (state === 'downloading' || state === 'paused')) { cancelDownload(); }
+        else if (e.key.toLowerCase() === 's' && state === 'idle') { startDownload(); }
+      });
+    })();
+  </script>
+</body>
+</html>

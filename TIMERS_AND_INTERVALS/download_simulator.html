@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Simulator</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f0f0f; /* Dark background */
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .card {
+      background: #1b1b1b;
+      padding: 25px 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      width: 300px;
+    }
+
+    .card h3 {
+      margin: 0 0 20px;
+      font-size: 16px;
+      font-weight: normal;
+      color: #ddd;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #2a2a2a;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    /* Fill starts empty */
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #00b894;
+      transition: width 0.3s ease;
+    }
+
+    /* Download icon inside the bar */
+    .progress-bar .icon {
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .percent {
+      font-size: 14px;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>Downloading..</h3>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+      <div class="icon">⬇️</div>
+    </div>
+    <div class="percent">0%</div>
+  </div>
+</body>
+</html>

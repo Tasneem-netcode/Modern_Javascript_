@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hide Alert Banner</title>
+</head>
+<body>
+    <div class="banner">
+        <p>This is an important alert message!</p>
+    </div>
+    
+    <script>
+        let banner = document.querySelector('.banner')
+        banner.style.backgroundColor = "#ffcc00";
+        
+        setInterval(() => {
+            banner.style.display = "none";
+        }, 3000);
+    </script>
+</body>
+</html>
