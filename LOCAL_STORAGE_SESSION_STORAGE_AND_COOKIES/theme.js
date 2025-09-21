@@ -1,39 +1,31 @@
-function setDarkOrLight(){
-    if(window.matchMedia("(prefers-color-scheme: dark)").matches){
-    document.body.classList.add("dark");
-    document.body.classList.remove("light");
+// Helper: apply theme to body
+function applyTheme(theme) {
+  document.body.classList.remove("light", "dark");
+  document.body.classList.add(theme);
 }
-else{
-     document.body.classList.add("light");
-    document.body.classList.remove("dark");
- }
+
+// Detect OS preference
+function getSystemTheme() {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
-setDarkOrLight();
 
-document.body.classList.add(localStorage.getItem("theme") || "light");
+// Apply saved or system theme
+let savedTheme = localStorage.getItem("theme");
+applyTheme(savedTheme || getSystemTheme());
 
-document.querySelector("#theme-toggle").addEventListener("click",()=>{
-    if(document.body.classList.contains("dark")){
-        document.body.classList.remove("dark");
-        document.body.classList.add("light");
-        // Save user preference in local storage
-        localStorage.setItem("theme", "light");
-        
-    }else{
-        document.body.classList.remove("light");
-        document.body.classList.add("dark");
-        // Save user preference in local storage
-        localStorage.setItem("theme", "dark");
-    }
-});
-// ...existing code...
+// React to system theme changes (only if user hasn't chosen manually)
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
-    if (event.matches) {
-        document.body.classList.add("dark");
-        document.body.classList.remove("light");
-    } else {
-        document.body.classList.add("light");
-        document.body.classList.remove("dark");
-    }
+  if (!localStorage.getItem("theme")) {
+    applyTheme(event.matches ? "dark" : "light");
+    console.log("Theme changed to " + (event.matches ? "dark" : "light"));
+  }
 });
-// ...existing code...
+
+// Toggle button
+document.querySelector("#theme-toggle").addEventListener("click", () => {
+  let currentTheme = document.body.classList.contains("dark") ? "dark" : "light";
+  let newTheme = currentTheme === "dark" ? "light" : "dark";
+  applyTheme(newTheme);
+  localStorage.setItem("theme", newTheme);
+});
+console.log("Theme toggled to " + newTheme);
