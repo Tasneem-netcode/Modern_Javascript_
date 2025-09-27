@@ -1,0 +1,42 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #524c4c;
+
+}
+
+h1{
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+p{
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+
+ol{
+    color: white;
+    margin-top: 10px;
+    text-align: center;
+    list-style-type: none;
+}
+li{
+    margin: 5px 0;
+}
+
+#types-of-scope{
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: #9f997f;
+
+}
+
+

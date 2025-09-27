@@ -2,64 +2,64 @@
 // alert("this is an alert box");
 // console.log("this is a log message");
 // let btn = document.querySelector("button");
-// // function clickhandler(e){
-// //     console.log("button clicked", e);
-// //     e.target.style.backgroundColor = "blue";
-// //     e.target.style.color = "white";
-// //     e.target.style.padding = "10px 20px";
-// //     e.target.style.border = "none";
-// //     e.target.style.borderRadius = "5px";
-// //     e.target.style.cursor = "pointer";
-// // }
-// // btn.addEventListener("click", clickhandler);
+// function clickhandler(e){
+//     console.log("button clicked", e);
+//     e.target.style.backgroundColor = "blue";
+//     e.target.style.color = "white";
+//     e.target.style.padding = "10px 20px";
+//     e.target.style.border = "none";
+//     e.target.style.borderRadius = "5px";
+//     e.target.style.cursor = "pointer";
+// }
+// btn.addEventListener("click", clickhandler);
 
-// btn.style.backgroundColor = "black";
-// btn.style.color = "white";
-// btn.style.padding = "10px 20px";
-// btn.style.border = "none";
-// btn.style.borderRadius = "5px";
-// btn.style.cursor = "pointer";
-// btn.style.fontSize = "16px";
-// btn.style.margin = "10px";
-// btn.style.display = "block";
-// btn.style.margin = "auto";
+btn.style.backgroundColor = "black";
+btn.style.color = "white";
+btn.style.padding = "10px 20px";
+btn.style.border = "none";
+btn.style.borderRadius = "5px";
+btn.style.cursor = "pointer";
+btn.style.fontSize = "16px";
+btn.style.margin = "10px";
+btn.style.display = "block";
+btn.style.margin = "auto";
 
-// btn.addEventListener("click", () => {
-//     message.style.display = "block";
+btn.addEventListener("click", () => {
+    message.style.display = "block";
 
-//     for(let i =0; i<30;i++){
-//         const spark = document.createElement("div");
-//         spark.textContent = "✨";
-//         spark.style.position = "fixed";
-//         spark.style.left = Math.random() * window.innerWidth + "px";
-//         // spark.style.top = Math.random() * window.innerHeight + "px";
-//         spark.style.top = "-20px";
-//         spark.style.fontSize = Math.random() * 24 + 12 + "px";
-//         spark.style.opacity = "1";
-//         spark.style.transition = "all 1s ease-out";
-//         document.body.appendChild(spark);
+    for(let i =0; i<30;i++){
+        const spark = document.createElement("div");
+        spark.textContent = "✨";
+        spark.style.position = "fixed";
+        spark.style.left = Math.random() * window.innerWidth + "px";
+        // spark.style.top = Math.random() * window.innerHeight + "px";
+        spark.style.top = "-20px";
+        spark.style.fontSize = Math.random() * 24 + 12 + "px";
+        spark.style.opacity = "1";
+        spark.style.transition = "all 1s ease-out";
+        document.body.appendChild(spark);
         
-//         let topPos =  -20;
-//         const speed = Math.random() * 3 +2 ;
+        let topPos =  -20;
+        const speed = Math.random() * 3 +2 ;
 
-//         const fall = setInterval(() => {
-//             topPos += speed;
-//             spark.style.top = topPos + "px";
+        const fall = setInterval(() => {
+            topPos += speed;
+            spark.style.top = topPos + "px";
 
-//             if(topPos > window.innerHeight){
-//                 clearInterval(fall);
-//                 spark.remove();
-//             }
-//         }, 30);
-//         // setTimeout(() => {
-//         //     spark.style.transition = "all 1s ease-out";
-//         //     spark.style.opacity = "0";
-//         //     setTimeout(() => {
-//         //         document.body.removeChild(spark);
-//         //     }, 1000);
-//         // }, Math.random() * 1000);
-//     }
-// });
+            if(topPos > window.innerHeight){
+                clearInterval(fall);
+                spark.remove();
+            }
+        }, 30);
+        setTimeout(() => {
+            spark.style.transition = "all 1s ease-out";
+            spark.style.opacity = "0";
+            setTimeout(() => {
+                document.body.removeChild(spark);
+            }, 1000);
+        }, Math.random() * 1000);
+    }
+});
 
 // let p = document.querySelector("p");
 // p.addEventListener("dblclick" , () => {
@@ -185,59 +185,59 @@
 //     }
 // });
 
-let form = document.querySelector("form");
-let inputs = document.querySelectorAll("input");
-let main = document.querySelector("#main");
+// let form = document.querySelector("form");
+// let inputs = document.querySelectorAll("input");
+// let main = document.querySelector("#main");
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault(); //to prevent the default behaviour of form submission
-    console.log("Form submitted"); 
+// form.addEventListener("submit", (e) => {
+//     e.preventDefault(); //to prevent the default behaviour of form submission
+//     console.log("Form submitted"); 
 
-    console.log(inputs[0].value);
-    console.log(inputs[1].value);
-    console.log(inputs[2].value);
-    console.log(inputs[3].files[0]); 
+//     console.log(inputs[0].value);
+//     console.log(inputs[1].value);
+//     console.log(inputs[2].value);
+//     console.log(inputs[3].files[0]); 
 
-    let card = document.createElement("div");
-    card.classList.add("card");
+//     let card = document.createElement("div");
+//     card.classList.add("card");
     
-    let profile = document.createElement("div");
-    profile.classList.add("profile");
+//     let profile = document.createElement("div");
+//     profile.classList.add("profile");
 
-    let img = document.createElement("img");
-    // img.setAttribute("src","https://plus.unsplash.com/premium_photo-1757637871816-221a63ff7f3c?q=80&w=773&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" );
+//     let img = document.createElement("img");
+//     // img.setAttribute("src","https://plus.unsplash.com/premium_photo-1757637871816-221a63ff7f3c?q=80&w=773&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" );
 
-    img.setAttribute("src", URL.createObjectURL(inputs[3].files[0]));//creates a temporary URL pointing to the file object
-    img.setAttribute("alt", "profile pic");
+//     img.setAttribute("src", URL.createObjectURL(inputs[3].files[0]));//creates a temporary URL pointing to the file object
+//     img.setAttribute("alt", "profile pic");
 
-    console.log(img);
+//     console.log(img);
     
-    let email = document.createElement("h5");
-    email.textContent = inputs[2].value;
+//     let email = document.createElement("h5");
+//     email.textContent = inputs[2].value;
 
-    let h3 = document.createElement("h3");
-    h3.textContent = inputs[0].value;
+//     let h3 = document.createElement("h3");
+//     h3.textContent = inputs[0].value;
     
-    let h5 = document.createElement("h5");
-    h5.textContent = "Web Developer";
+//     let h5 = document.createElement("h5");
+//     h5.textContent = "Web Developer";
     
     
-    let p = document.createElement("p");
-    p.textContent = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, rerum. Adipisci, expedita!";
+//     let p = document.createElement("p");
+//     p.textContent = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, rerum. Adipisci, expedita!";
     
-    h5.appendChild(email);
-    profile.appendChild(img);
-    card.appendChild(profile); 
+//     h5.appendChild(email);
+//     profile.appendChild(img);
+//     card.appendChild(profile); 
 
-    card.appendChild(email);
-    card.appendChild(h3);
-    card.appendChild(h5);
-    card.appendChild(p);
-    main.appendChild(card);
-if(inputs.type !== "submit"){
-    inputs.forEach(input => input.value = "");
+//     card.appendChild(email);
+//     card.appendChild(h3);
+//     card.appendChild(h5);
+//     card.appendChild(p);
+//     main.appendChild(card);
+// if(inputs.type !== "submit"){
+//     inputs.forEach(input => input.value = "");
 
-}
-    // document.body.appendChild( card);
-    });
+// }
+//     // document.body.appendChild( card);
+//     });
 
