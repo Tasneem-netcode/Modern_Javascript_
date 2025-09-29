@@ -17,6 +17,7 @@ function myFunction() {
     var functionNum = 20;
     console.log(functionNum); // Accessible within the function
 }
+
 myFunction();
 // console.log(functionVar); // Error: functionVar is not defined
 // console.log(functionNum); // Error: functionNum is not defined
