@@ -44,3 +44,7 @@ setTimeout(() => {
     toaster("This is another notification");
 
 } , 2000);
+setTimeout(() => {
+    toaster("You have a new message");
+
+} , 2000);
