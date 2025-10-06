@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Card - Dark</title>
+
+    <!-- Tailwind Play CDN and set dark mode to 'class' -->
+    <script>
+        tailwind = { config: { darkMode: 'class' } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-900 flex items-center justify-center p-6">
+
+    <!-- Refresh button (center-top) -->
+    <button
+        id="refreshBtn"
+        aria-label="Refresh"
+        class="fixed top-4 left-1/2 z-50 transform -translate-x-1/2 inline-flex items-center gap-2 px-3 py-2 bg-gray-800/60 hover:bg-gray-800/80 text-white text-sm rounded-lg shadow-md ring-1 ring-white/6 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        title="Refresh"
+    >
+        <!-- refresh SVG icon -->
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 0-3.7 7.0"></path>
+            <polyline points="22 12 22 6 16 6"></polyline>
+        </svg>
+        <span class="hidden sm:inline">Refresh</span>
+    </button>
+
+    <!-- Container for multiple user cards -->
+    <div class="cards-container flex flex-wrap gap-6 justify-center p-6"></div>
+
+    <script>
+        // Try to call a page-specific refresh function if provided; otherwise reload.
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            const refreshFn = window.refreshCards || window.loadCards || window.fetchCards;
+            if (typeof refreshFn === 'function') {
+                refreshFn();
+            } else {
+                // fallback: reload the page
+                location.reload();
+            }
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
