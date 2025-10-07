@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dark Responsive Form</title>
+    <style>
+        :root{
+            --bg:#0f1720;
+            --card:#0b1220;
+            --muted:#9aa4b2;
+            --accent:#6ee7b7;
+            --accent-2:#60a5fa;
+            --danger:#fb7185;
+            --glass: rgba(255,255,255,0.03);
+        }
+
+        *{box-sizing:border-box}
+        html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--muted);background:
+            radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent),
+            radial-gradient(1000px 400px at 90% 90%, rgba(110,231,183,0.04), transparent),
+            var(--bg);
+        }
+
+        .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
+
+        .card{
+            width:100%;
+            max-width:420px;
+            background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.01));
+            border:1px solid rgba(255,255,255,0.04);
+            border-radius:12px;
+            padding:28px;
+            box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+            backdrop-filter: blur(6px);
+        }
+
+        h1{margin:0 0 6px 0;font-size:20px;color:#e6eef6}
+        p.lead{margin:0 0 20px 0;color:var(--muted);font-size:13px}
+
+        form{display:flex;flex-direction:column;gap:12px}
+        .field{display:flex;flex-direction:column;gap:8px}
+        label{font-size:13px;color:#cfe7f7}
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]{
+            appearance:none;
+            padding:12px 14px;
+            border-radius:8px;
+            border:1px solid rgba(255,255,255,0.04);
+            background:var(--glass);
+            color:#e6eef6;
+            outline:none;
+            transition:box-shadow .15s, border-color .15s, transform .06s;
+            font-size:14px;
+        }
+        input::placeholder{color:rgba(230,238,246,0.28)}
+        input:focus{
+            box-shadow:0 4px 20px rgba(96,165,250,0.08);
+            border-color:var(--accent-2);
+            transform:translateY(-1px);
+        }
+
+        .row{
+            display:flex;
+            gap:10px;
+        }
+        .row .field{flex:1}
+
+        .password-row{position:relative}
+        .toggle-pass{
+            position:absolute;
+            right:8px;
+            top:50%;
+            transform:translateY(-50%);
+            background:transparent;border:0;color:var(--muted);
+            padding:6px;border-radius:6px;cursor:pointer;font-size:13px;
+        }
+        .toggle-pass:focus{outline:2px solid rgba(96,165,250,0.12)}
+
+        .btn{
+            margin-top:6px;
+            padding:12px 14px;
+            border-radius:10px;
+            border:0;
+            cursor:pointer;
+            color:#072126;
+            font-weight:600;
+            font-size:15px;
+            background:linear-gradient(90deg,var(--accent),var(--accent-2));
+            box-shadow:0 8px 20px rgba(96,165,250,0.14);
+        }
+        .btn:active{transform:translateY(1px)}
+        .helper{font-size:12px;color:rgba(230,238,246,0.36);margin-top:8px}
+
+        .msg{
+            margin-top:10px;
+            padding:10px 12px;
+            border-radius:8px;
+            font-size:13px;
+        }
+        .msg.success{background:rgba(110,231,183,0.08);color:var(--accent)}
+        .msg.error{background:rgba(251,113,133,0.06);color:var(--danger)}
+
+        @media (max-width:460px){
+            .card{padding:20px}
+            h1{font-size:18px}
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card" role="region" aria-label="Sign up">
+            <h1>Create account</h1>
+            <p class="lead">Quickly sign up with a username, email and password.</p>
+
+            <form id="signup" novalidate>
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="your Username" required minlength="2" />
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required />
+                </div>
+
+                <div class="field password-row">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Choose a strong password" required minlength="6" />
+                    <button type="button" class="toggle-pass" aria-label="Show password" id="togglePass">Show</button>
+                </div>
+
+                <button class="btn" type="submit">Create account</button>
+
+                <div id="feedback" aria-live="polite"></div>
+                <p class="helper">By creating an account you agree to the terms. This form is just a demo — no data is sent anywhere.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- <script>
+        const form = document.getElementById('signup');
+        const feedback = document.getElementById('feedback');
+        const toggle = document.getElementById('togglePass');
+        const pwd = document.getElementById('password');
+
+        toggle.addEventListener('click', () => {
+            const shown = pwd.type === 'text';
+            pwd.type = shown ? 'password' : 'text';
+            toggle.textContent = shown ? 'Show' : 'Hide';
+            toggle.setAttribute('aria-pressed', String(!shown));
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            feedback.textContent = '';
+            feedback.className = '';
+
+            if (!form.checkValidity()) {
+                feedback.className = 'msg error';
+                feedback.textContent = 'Please correct the highlighted fields.';
+                // Let browser show native hints
+                form.reportValidity();
+                return;
+            }
+
+            // Example handling: show success and log (no networking)
+            const data = {
+                username: form.username.value.trim(),
+                email: form.email.value.trim(),
+                password: form.password.value
+            };
+
+            console.log('Signup data (demo):', data);
+            feedback.className = 'msg success';
+            feedback.textContent = 'Account created (demo). Check console for submitted values.';
+            form.reset();
+            toggle.textContent = 'Show';
+            pwd.type = 'password';
+        });
+    </script> -->
+
+    <script src="form.js"></script>
+</body>
+</html>
