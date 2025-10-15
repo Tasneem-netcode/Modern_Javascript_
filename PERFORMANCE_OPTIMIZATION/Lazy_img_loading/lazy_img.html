@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lazy Loading Images with IntersectionObserver</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Lazy Loading Images Demo</h1>
+  <div class="container">
+  <p>Scroll down to load more images</p>
+<div class="space"></div>
+ 
+    <!-- Each image uses a low-res placeholder or blank src -->
+    <img data-src="https://picsum.photos/id/1025/600/400" alt="Image 2" class="lazy">
+    <div class="spacer" ></div>
+
+    <img data-src="https://picsum.photos/id/1043/600/400" alt="Image 3" class="lazy">
+    <div class="spacer"></div>
+
+    <img data-src="https://picsum.photos/id/1011/600/400" alt="Image 1" class="lazy">
+    <div class="spacer" ></div>
+
+    <img data-src="https://picsum.photos/id/1056/600/400" alt="Image 4" class="lazy">
+    <div class="spacer"></div>
+
+    <img data-src="https://picsum.photos/id/1074/600/400" alt="Image 5" class="lazy">
+    <div class="spacer"></div>
+
+    <img data-src="https://picsum.photos/id/1084/600/400" alt="Image 6" class="lazy">
+    <div class="spacer" ></div>
+  </div>
+
+  <script src="lazily_loading_img.js"></script>
+</body>
+</html>
