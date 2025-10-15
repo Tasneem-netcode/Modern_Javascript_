@@ -11,8 +11,8 @@ const observer = new IntersectionObserver(function(entries, observer){
         }
     });
 }, {
-    root : null,
-    threshold: 0.1,
+    root : null, // viewport is screen
+    threshold: 0.1, // 10% of the image is visible
 }
 );
 
